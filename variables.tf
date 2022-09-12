@@ -1,19 +1,3 @@
-/*
-# These vars would be used by cloudwatch.tf and should be uncommented if we decide to use them.
-variable "alarm_cpu_threshold" {
-  default = "75"
-}
-
-variable "alarm_memory_threshold" {
-  # 10MB
-  default = "10000000"
-}
-
-variable "alarm_actions" {
-  type = "list"
-}
-*/
-
 variable "apply_immediately" {
   description = "Specifies whether any modifications are applied immediately, or during the next maintenance window. Default is false."
   type        = bool
@@ -21,13 +5,13 @@ variable "apply_immediately" {
 }
 
 variable "allowed_cidr" {
-  description = "A list of Security Group ID's to allow access to."
+  description = "A list of CIDR to allow access to."
   type        = list(string)
-  default     = ["127.0.0.1/32"]
+  default     = []
 }
 
 variable "allowed_security_groups" {
-  description = "A list of Security Group ID's to allow access to."
+  description = "A list of Security Group ID to allow access to."
   type        = list(string)
   default     = []
 }
@@ -35,11 +19,13 @@ variable "allowed_security_groups" {
 variable "env" {
   description = "env to deploy into, should typically dev/staging/prod"
   type        = string
+  default     = ""
 }
 
 variable "name" {
   description = "Name for the Redis replication group i.e. UserObject"
   type        = string
+  default     = ""
 }
 
 variable "redis_clusters" {
@@ -173,4 +159,58 @@ variable "notification_topic_arn" {
   description = "An Amazon Resource Name (ARN) of an SNS topic to send ElastiCache notifications to. Example: arn:aws:sns:us-east-1:012345678999:my_sns_topic"
   type        = string
   default     = ""
+}
+
+variable "replication_group_name" {
+  description = "Name of the ElastiCache replication group"
+  type        = string
+  default     = ""
+}
+
+variable "parameter_group_name" {
+  description = "Name of the ElastiCache parameter group"
+  type        = string
+  default     = ""
+}
+
+variable "create_subnet_group" {
+  description = "Create an ElastiCache subnet group"
+  type        = bool
+  default     = true
+}
+
+variable "subnet_group_id" {
+  description = "ID of an already present ElastiCache subnet group"
+  type        = string
+  default     = ""
+}
+
+variable "subnet_group_name" {
+  description = "Name of the ElastiCache subnet group"
+  type        = string
+  default     = ""
+}
+
+variable "security_group_name" {
+  description = "Name of the ElastiCache security group"
+  type        = string
+  default     = ""
+}
+
+variable "parameter_group_tags" {
+  description = "Additional tags parameter group"
+  type        = map(string)
+  default     = {}
+}
+
+variable "subnet_group_tags" {
+  description = "Additional tags subnet group"
+  type        = map(string)
+  default     = {}
+}
+
+variable "security_group_tags" {
+  description = "Additional tags security group"
+  type        = map(string)
+  default     = {}
 }
